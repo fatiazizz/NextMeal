@@ -1,0 +1,12 @@
+---
+description: Preserve user data; never wipe the database when real users exist.
+globs:
+alwaysApply: true
+---
+
+# Database and user data
+
+- **Users created via the register page are stored in the DB and must persist.** They must only be removed when an admin explicitly deletes them. Never delete or wipe users except through the admin delete flow.
+- **Never run `php artisan migrate:fresh` or `php artisan migrate:refresh`** when the database contains user data that must be kept. These commands drop all tables and delete all users and data.
+- For schema updates (new migrations), use **`php artisan migrate`** only. That applies new migrations without dropping tables or deleting data.
+- **Never add seeders or code that truncate, delete, or wipe the `users` table.** Seeders must only create or update specific records (e.g. system/admin via `updateOrCreate`) and must not remove or overwrite users who registered through the app.

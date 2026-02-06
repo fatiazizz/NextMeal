@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f97316"/>
+      <stop offset="100%" style="stop-color:#ea580c"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="192" height="192" rx="40" fill="url(#bgGradient)"/>
+  
+  <!-- Plate -->
+  <ellipse cx="96" cy="105" rx="52" ry="37" fill="#ffffff" opacity="0.95"/>
+  <ellipse cx="96" cy="105" rx="40" ry="28" fill="none" stroke="#e2e8f0" stroke-width="2"/>
+  
+  <!-- Food -->
+  <circle cx="96" cy="100" r="22" fill="#fcd34d"/>
+  
+  <!-- Leaf -->
+  <path d="M82 90 Q92 80 102 90 Q92 100 82 90" fill="#22c55e"/>
+  
+  <!-- Steam -->
+  <path d="M76 67 Q81 57 76 47" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.8"/>
+  <path d="M96 62 Q101 50 96 40" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.9"/>
+  <path d="M116 67 Q111 57 116 47" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.8"/>
+  
+  <!-- Fork -->
+  <g transform="translate(35, 75) rotate(-30) scale(0.4)">
+    <rect x="0" y="0" width="8" height="120" rx="4" fill="#ffffff"/>
+    <rect x="-8" y="-30" width="4" height="35" rx="2" fill="#ffffff"/>
+    <rect x="0" y="-30" width="4" height="35" rx="2" fill="#ffffff"/>
+    <rect x="8" y="-30" width="4" height="35" rx="2" fill="#ffffff"/>
+    <rect x="16" y="-30" width="4" height="35" rx="2" fill="#ffffff"/>
+  </g>
+  
+  <!-- Knife -->
+  <g transform="translate(145, 75) rotate(30) scale(0.4)">
+    <rect x="0" y="0" width="10" height="120" rx="3" fill="#ffffff"/>
+    <path d="M0 -30 L10 -30 L12 0 L0 0 Z" fill="#ffffff"/>
+  </g>
+  
+  <!-- NM Text -->
+  <text x="96" y="170" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#ffffff" text-anchor="middle">NM</text>
+</svg>

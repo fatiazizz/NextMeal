@@ -1,0 +1,68 @@
+{
+  "packageId": "com.nextmeal.app",
+  "host": "localhost:3000",
+  "name": "NextMeal",
+  "launcherName": "NextMeal",
+  "display": "standalone",
+  "themeColor": "#f97316",
+  "navigationColor": "#0f172a",
+  "navigationColorDark": "#0f172a",
+  "navigationDividerColor": "#0f172a",
+  "navigationDividerColorDark": "#0f172a",
+  "backgroundColor": "#0f172a",
+  "enableNotifications": true,
+  "startUrl": "/",
+  "iconUrl": "/icons/icon-512x512.png",
+  "maskableIconUrl": "/icons/icon-512x512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./android-keystore.jks",
+    "alias": "nextmeal"
+  },
+  "appVersionCode": 1,
+  "appVersionName": "1.0.0",
+  "shortcuts": [
+    {
+      "name": "Browse Meals",
+      "shortName": "Meals",
+      "url": "/meals",
+      "icons": [
+        {
+          "src": "/icons/meals-shortcut.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "My Favorites",
+      "shortName": "Favorites", 
+      "url": "/favorites",
+      "icons": [
+        {
+          "src": "/icons/favorites-shortcut.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {
+    "locationDelegation": {
+      "enabled": false
+    },
+    "playBilling": {
+      "enabled": false
+    }
+  },
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "http://localhost:3000/",
+  "minSdkVersion": 21,
+  "orientation": "portrait"
+}

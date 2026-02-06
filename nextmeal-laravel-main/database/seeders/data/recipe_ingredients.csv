@@ -1,0 +1,221 @@
+﻿recipe_name,ingredient,quantity,unit
+Margherita Pizza,Pizza dough,250,g
+Margherita Pizza,Tomato sauce,100,g
+Margherita Pizza,Fresh mozzarella,125,g
+Margherita Pizza,Olive oil,1,tbsp
+Margherita Pizza,Fresh basil,5,leaves
+Margherita Pizza,Salt,0.5,tsp
+Spaghetti Carbonara,Spaghetti,200,g
+Spaghetti Carbonara,Egg yolks,3,pcs
+Spaghetti Carbonara,Guanciale,120,g
+Spaghetti Carbonara,Pecorino,60,g
+Spaghetti Carbonara,Black pepper,1,tsp
+Lasagna Bolognese,Lasagna sheets,250,g
+Lasagna Bolognese,Ground beef,500,g
+Lasagna Bolognese,Tomato sauce,600,g
+Lasagna Bolognese,Béchamel sauce,500,ml
+Lasagna Bolognese,Parmesan cheese,80,g
+Croissant,Flour,500,g
+Croissant,Butter,300,g
+Croissant,Milk,250,ml
+Croissant,Yeast,10,g
+Croissant,Sugar,50,g
+Croissant,Salt,10,g
+Ratatouille,Zucchini,2,pcs
+Ratatouille,Eggplant,1,pcs
+Ratatouille,Bell pepper,1,pcs
+Ratatouille,Tomato sauce,300,g
+Ratatouille,Olive oil,3,tbsp
+Sushi Rolls (Maki),Sushi rice,300,g
+Sushi Rolls (Maki),Nori sheets,4,pcs
+Sushi Rolls (Maki),Fresh salmon,150,g
+Sushi Rolls (Maki),Cucumber,1,pcs
+Ramen,Ramen noodles,200,g
+Ramen,Chicken or pork broth,1.2,l
+Ramen,Pork belly,200,g
+Ramen,Soy sauce,2,tbsp
+Ramen,Eggs,2,pcs
+Butter Chicken,Chicken thighs,600,g
+Butter Chicken,Yogurt,150,g
+Butter Chicken,Tomato puree,400,g
+Butter Chicken,Butter,50,g
+Butter Chicken,Cream,120,ml
+Chicken Biryani,Basmati rice,400,g
+Chicken Biryani,Chicken,700,g
+Chicken Biryani,Yogurt,250,g
+Chicken Biryani,Onion,2,pcs
+Chicken Biryani,Biryani spices,1,to_taste
+Ghormeh Sabzi,Beef or lamb,700,g
+Ghormeh Sabzi,Herb mix,400,g
+Ghormeh Sabzi,Kidney beans,200,g
+Ghormeh Sabzi,Dried lime,3,pcs
+Ghormeh Sabzi,Onion,1,pcs
+Tahchin,Basmati rice,400,g
+Tahchin,Yogurt,250,g
+Tahchin,Egg yolks,2,pcs
+Tahchin,Saffron (brewed),2,tbsp
+Tahchin,Vegetable oil,3,tbsp
+Tahchin,Salt,1,tsp
+Tacos al Pastor,Pork shoulder,500,g
+Tacos al Pastor,Pineapple,100,g
+Tacos al Pastor,Corn tortillas,8,pcs
+Tacos al Pastor,Onion,1,pcs
+Tacos al Pastor,Al pastor spice mix,2,tbsp
+Guacamole,Avocados,3,pcs
+Guacamole,Lime juice,20,ml
+Guacamole,Onion (finely chopped),30,g
+Guacamole,Salt,0.5,tsp
+Cheeseburger,Ground beef,150,g
+Cheeseburger,Burger bun,1,pcs
+Cheeseburger,Cheddar cheese slice,1,pcs
+Cheeseburger,Salt,0.5,tsp
+Cheeseburger,Oil,1,tsp
+Mac and Cheese,Elbow pasta,250,g
+Mac and Cheese,Cheddar cheese (grated),200,g
+Mac and Cheese,Milk,300,ml
+Mac and Cheese,Butter,30,g
+Mac and Cheese,Flour,2,tbsp
+Fried Rice,Cooked rice (cold),400,g
+Fried Rice,Eggs,2,pcs
+Fried Rice,Mixed vegetables,150,g
+Fried Rice,Soy sauce,2,tbsp
+Fried Rice,Oil,2,tbsp
+Kung Pao Chicken,Chicken breast,500,g
+Kung Pao Chicken,Peanuts,80,g
+Kung Pao Chicken,Soy sauce,2,tbsp
+Kung Pao Chicken,Dried chili peppers,6,pcs
+Kung Pao Chicken,Oil,2,tbsp
+Pad Thai,Rice noodles,200,g
+Pad Thai,Shrimp,200,g
+Pad Thai,Eggs,2,pcs
+Pad Thai,Pad Thai sauce,4,tbsp
+Pad Thai,Bean sprouts,100,g
+Green Curry,Green curry paste,2,tbsp
+Green Curry,Coconut milk,400,ml
+Green Curry,Chicken,500,g
+Green Curry,Vegetables,200,g
+Bibimbap,Cooked rice,400,g
+Bibimbap,Beef (sliced),200,g
+Bibimbap,Mixed vegetables,300,g
+Bibimbap,Eggs,2,pcs
+Bibimbap,Sesame oil,1,tbsp
+Kimchi,Napa cabbage,1,pcs
+Kimchi,Salt,3,tbsp
+Kimchi,Korean chili flakes,50,g
+Kimchi,Garlic,5,clove
+Kimchi,Ginger,1,tbsp
+Greek Salad,Tomatoes,3,pcs
+Greek Salad,Cucumber,1,pcs
+Greek Salad,Feta cheese,100,g
+Greek Salad,Olives,50,g
+Greek Salad,Olive oil,2,tbsp
+Moussaka,Eggplant,2,pcs
+Moussaka,Ground beef,500,g
+Moussaka,Tomato sauce,400,g
+Moussaka,Béchamel sauce,400,ml
+Paella,Short-grain rice,400,g
+Paella,Chicken or seafood,600,g
+Paella,Chicken broth,1,l
+Paella,Olive oil,3,tbsp
+Tortilla Española,Potatoes,500,g
+Tortilla Española,Eggs,6,pcs
+Tortilla Española,Onion,1,pcs
+Tortilla Española,Olive oil,3,tbsp
+Doner Kebab,Beef or chicken,600,g
+Doner Kebab,Yogurt,100,g
+Doner Kebab,Spices,2,tbsp
+Doner Kebab,Pita bread,4,pcs
+Baklava,Phyllo dough,400,g
+Baklava,Chopped walnuts,300,g
+Baklava,Butter (melted),200,g
+Baklava,Sugar syrup,250,ml
+Pho,Beef broth,1.5,l
+Pho,Rice noodles,200,g
+Pho,Beef slices,200,g
+Pho,Herbs,1,to_taste
+Spring Rolls,Rice paper sheets,8,pcs
+Spring Rolls,Shrimp,200,g
+Spring Rolls,Rice noodles,100,g
+Spring Rolls,Lettuce,1,cup
+Poutine,Potatoes (fries),500,g
+Poutine,Cheese curds,200,g
+Poutine,Gravy,300,ml
+Feijoada,Black beans,400,g
+Feijoada,Pork (mixed cuts),600,g
+Feijoada,Onion,1,pcs
+Feijoada,Garlic,3,clove
+Pão de Queijo,Tapioca flour,250,g
+Pão de Queijo,Milk,125,ml
+Pão de Queijo,Oil,60,ml
+Pão de Queijo,Eggs,2,pcs
+Pão de Queijo,Cheese (minas or parmesan),150,g
+Couscous,Couscous,300,g
+Couscous,Vegetables,300,g
+Couscous,Chickpeas,150,g
+Couscous,Olive oil,2,tbsp
+Tagine,Chicken or lamb,600,g
+Tagine,Onion,1,pcs
+Tagine,Spices,2,tbsp
+Tagine,Vegetables,300,g
+Borscht,Beets,3,pcs
+Borscht,Cabbage,200,g
+Borscht,Potatoes,2,pcs
+Borscht,Beef broth,1.5,l
+Pelmeni,Flour,400,g
+Pelmeni,Ground beef,300,g
+Pelmeni,Onion,1,pcs
+Pelmeni,Water,200,ml
+Empanadas,Empanada dough,12,discs
+Empanadas,Ground beef,400,g
+Empanadas,Onion,1,pcs
+Empanadas,Spices,1,to_taste
+Asado,Beef cuts,1,kg
+Asado,Salt,1,tbsp
+Koshari,Rice,200,g
+Koshari,Lentils,200,g
+Koshari,Pasta,150,g
+Koshari,Tomato sauce,300,g
+Falafel,Dried chickpeas,300,g
+Falafel,Onion,1,pcs
+Falafel,Garlic,3,clove
+Falafel,Spices,2,tsp
+Hummus,Cooked chickpeas,400,g
+Hummus,Tahini,80,g
+Hummus,Lemon juice,40,ml
+Hummus,Garlic,1,clove
+Hummus,Olive oil,2,tbsp
+Hummus,Salt,0.5,tsp
+Shawarma,Chicken thighs,700,g
+Shawarma,Yogurt,150,g
+Shawarma,Shawarma spices,2,tbsp
+Shawarma,Pita bread,4,pcs
+Jerk Chicken,Chicken pieces,1,kg
+Jerk Chicken,Jerk seasoning,3,tbsp
+Jerk Chicken,Lime juice,2,tbsp
+Rice and Peas,Rice,300,g
+Rice and Peas,Kidney beans,200,g
+Rice and Peas,Coconut milk,400,ml
+Rice and Peas,Salt,1,tsp
+Maple Salmon,Salmon fillets,600,g
+Maple Salmon,Maple syrup,3,tbsp
+Maple Salmon,Soy sauce,1,tbsp
+Maple Salmon,Garlic,1,clove
+Cheese Fondue,Gruyère cheese,300,g
+Cheese Fondue,Emmental cheese,300,g
+Cheese Fondue,White wine,250,ml
+Cheese Fondue,Garlic,1,clove
+Rösti,Potatoes,600,g
+Rösti,Butter,40,g
+Rösti,Salt,1,tsp
+Meat Pie,Ground beef,500,g
+Meat Pie,Onion,1,pcs
+Meat Pie,Beef stock,250,ml
+Meat Pie,Pie pastry,2,sheets
+Pavlova,Egg whites,4,pcs
+Pavlova,Sugar,200,g
+Pavlova,Cornstarch,1,tsp
+Pavlova,Vinegar,1,tsp
+Fish and Chips,White fish fillets,600,g
+Fish and Chips,Flour,200,g
+Fish and Chips,Beer,250,ml
+Fish and Chips,Potatoes,600,g

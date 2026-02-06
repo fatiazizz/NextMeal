@@ -1,0 +1,51 @@
+recipe_name,cuisin,method,pre-time,serving
+Margherita Pizza,Italian,Baked,30 min,2
+Spaghetti Carbonara,Italian,Stovetop,25 min,2
+Lasagna Bolognese,Italian,Baked,90 min,4
+Croissant,French,Baked,180 min,6
+Ratatouille,French,Baked,60 min,4
+Sushi Rolls (Maki),Japanese,No-cook,45 min,2
+Ramen,Japanese,Boiled,60 min,2
+Butter Chicken,Indian,Simmered,60 min,4
+Chicken Biryani,Indian,Steamed,90 min,4
+Ghormeh Sabzi,Iranian,Simmered,180 min,4
+Tahchin,Iranian,Baked,90 min,4
+Tacos al Pastor,Mexican,Grilled,45 min,3
+Guacamole,Mexican,No-cook,10 min,2
+Cheeseburger,American,Grilled,25 min,1
+Mac and Cheese,American,Baked,45 min,4
+Fried Rice,Chinese,Stir-fried,30 min,2
+Kung Pao Chicken,Chinese,Stir-fried,35 min,3
+Pad Thai,Thai,Stir-fried,40 min,2
+Green Curry,Thai,Simmered,45 min,3
+Bibimbap,Korean,Mixed,45 min,2
+Kimchi,Korean,Fermented,4320 min,6
+Greek Salad,Greek,No-cook,15 min,2
+Moussaka,Greek,Baked,90 min,4
+Paella,Spanish,Simmered,60 min,4
+Tortilla Española,Spanish,Fried,40 min,3
+Doner Kebab,Turkish,Grilled,60 min,3
+Baklava,Turkish,Baked,90 min,8
+Pho,Vietnamese,Boiled,120 min,3
+Spring Rolls,Vietnamese,No-cook,30 min,2
+Poutine,Canadian,Fried,30 min,2
+Feijoada,Brazilian,Simmered,180 min,6
+Pão de Queijo,Brazilian,Baked,40 min,6
+Couscous,Moroccan,Steamed,45 min,4
+Tagine,Moroccan,Simmered,120 min,4
+Borscht,Russian,Boiled,90 min,4
+Pelmeni,Russian,Boiled,60 min,4
+Empanadas,Argentinian,Baked,60 min,6
+Asado,Argentinian,Grilled,120 min,6
+Koshari,Egyptian,Boiled,60 min,4
+Falafel,Middle Eastern,Fried,45 min,4
+Hummus,Lebanese,Blended,15 min,4
+Shawarma,Lebanese,Roasted,60 min,4
+Jerk Chicken,Jamaican,Grilled,90 min,4
+Rice and Peas,Jamaican,Boiled,45 min,4
+Maple Salmon,Canadian,Baked,25 min,2
+Cheese Fondue,Swiss,Melted,30 min,4
+Rösti,Swiss,Fried,35 min,2
+Meat Pie,Australian,Baked,60 min,4
+Pavlova,Australian,Baked,120 min,6
+Fish and Chips,British,Fried,45 min,2

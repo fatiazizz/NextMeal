@@ -1,0 +1,172 @@
+﻿Ingredient,Unit,Category,Other measurement units (suggested)
+Al pastor spice mix,tbsp,Spices & Seasonings,"ml, l, cup, tsp"
+All-purpose flour,g,Grains & Dough,"cup, tbsp, tsp, kg"
+Avocados,pcs,Produce,
+Baking powder,g,Grains & Dough,"tsp, tbsp, kg"
+Baking soda,g,Grains & Dough,"tsp, tbsp, kg"
+Basmati rice,g,Grains & Dough,"kg, cup, tbsp, tsp, to_taste"
+Bay leaf,pcs,Spices & Seasonings,to_taste
+Bean sprouts,g,Produce,kg
+Beef (sliced),g,Protein,kg
+Beef broth,l,Protein,"ml, cup, tbsp, tsp"
+Beef cuts,kg,Protein,g
+Beef or chicken,g,Protein,kg
+Beef or lamb,g,Protein,kg
+Beef slices,g,Protein,kg
+Beef stock,ml,Protein,"l, cup, tbsp, tsp"
+Beer,ml,Liquids & Condiments,"l, cup, tbsp, tsp"
+Beets,pcs,Produce,
+Bell pepper,pcs,Spices & Seasonings,
+Biryani spices,to_taste,Spices & Seasonings,"tsp, tbsp, g"
+Black beans,g,Legumes,kg
+Black pepper,tsp,Spices & Seasonings,"ml, l, cup, tbsp"
+Bread crumbs,g,Grains & Dough,"cup, tbsp, kg"
+Broccoli,g,Produce,"pcs, kg"
+Brown sugar,g,Grains & Dough,"cup, tbsp, tsp, kg"
+Burger bun,pcs,Grains & Dough,
+Butter,g,Dairy & Sauces,kg
+Butter (melted),g,Dairy & Sauces,kg
+Béchamel sauce,ml,Dairy & Sauces,"l, cup, tbsp, tsp"
+Cabbage,g,Produce,kg
+Carrot,pcs,Produce,"g, kg"
+Cauliflower,g,Produce,"pcs, kg"
+Celery,pcs,Produce,"g, kg"
+Cheddar cheese (grated),g,Dairy & Sauces,kg
+Cheddar cheese slice,pcs,Dairy & Sauces,
+Cheese (minas or parmesan),g,Dairy & Sauces,kg
+Cheese curds,g,Dairy & Sauces,kg
+Chicken,g,Protein,kg
+Chicken breast,g,Protein,kg
+Chicken broth,l,Protein,"ml, cup, tbsp, tsp"
+Chicken or lamb,g,Protein,kg
+Chicken or pork broth,l,Protein,"ml, cup, tbsp, tsp"
+Chicken or seafood,g,Protein,kg
+Chicken pieces,kg,Protein,g
+Chicken thighs,g,Protein,kg
+Chickpeas,g,Legumes,kg
+Chili powder,g,Spices & Seasonings,"tsp, tbsp, to_taste, kg"
+Chopped walnuts,g,Other,kg
+Cilantro,g,Produce,"cup, kg"
+Cinnamon,g,Spices & Seasonings,"tsp, tbsp, kg"
+Coconut cream,ml,Dairy & Sauces,"cup, tbsp, tsp, l"
+Coconut milk,ml,Dairy & Sauces,"l, cup, tbsp, tsp"
+Cooked chickpeas,g,Legumes,kg
+Cooked rice,g,Grains & Dough,"kg, cup, tbsp, tsp, to_taste"
+Cooked rice (cold),g,Grains & Dough,"kg, cup, tbsp, tsp, to_taste"
+Corn tortillas,pcs,Grains & Dough,
+Cornstarch,tsp,Spices & Seasonings,"ml, l, cup, tbsp"
+Couscous,g,Grains & Dough,kg
+Cream,ml,Dairy & Sauces,"l, cup, tbsp, tsp"
+Cream cheese,g,Dairy & Sauces,"tbsp, kg"
+Cucumber,pcs,Produce,
+Cumin,g,Spices & Seasonings,"tsp, tbsp, to_taste, kg"
+Dried chickpeas,g,Legumes,kg
+Dried chili peppers,pcs,Spices & Seasonings,
+Dried lime,pcs,Produce,
+Egg whites,pcs,Protein,
+Egg yolks,pcs,Protein,
+Eggplant,pcs,Protein,
+Eggs,pcs,Protein,
+Elbow pasta,g,Grains & Dough,kg
+Emmental cheese,g,Dairy & Sauces,kg
+Empanada dough,discs,Grains & Dough,pcs
+Feta cheese,g,Dairy & Sauces,kg
+Fish sauce,ml,Liquids & Condiments,"tbsp, tsp, cup, l"
+Flour,g,Other,"kg, cup, tbsp, tsp, to_taste"
+Fresh basil,leaves,Produce,pcs
+Fresh mozzarella,g,Dairy & Sauces,kg
+Fresh salmon,g,Protein,kg
+Garlic,clove,Other,pcs
+Garlic powder,g,Spices & Seasonings,"tsp, tbsp, to_taste, kg"
+Ginger,tbsp,Spices & Seasonings,"ml, l, cup, tsp"
+Gravy,ml,Liquids & Condiments,"l, cup, tbsp, tsp"
+Greek yogurt,g,Dairy & Sauces,"cup, tbsp, kg"
+Green curry paste,tbsp,Other,"ml, l, cup, tsp"
+Green onions,pcs,Produce,g
+Ground beef,g,Protein,kg
+Gruyère cheese,g,Dairy & Sauces,kg
+Guanciale,g,Other,kg
+Herb mix,g,Spices & Seasonings,"kg, cup, tbsp, tsp, to_taste"
+Herbs,to_taste,Spices & Seasonings,"tsp, tbsp, g"
+Honey,ml,Liquids & Condiments,"cup, tbsp, tsp, l"
+Jerk seasoning,tbsp,Spices & Seasonings,"ml, l, cup, tsp"
+Ketchup,ml,Liquids & Condiments,"tbsp, tsp, cup, l"
+Kidney beans,g,Legumes,kg
+Korean chili flakes,g,Spices & Seasonings,"kg, cup, tbsp, tsp, to_taste"
+Lasagna sheets,g,Grains & Dough,kg
+Lemon,pcs,Produce,"ml (juice), tbsp (juice)"
+Lemon juice,ml,Liquids & Condiments,"l, cup, tbsp, tsp"
+Lentils,g,Legumes,kg
+Lettuce,cup,Produce,"ml, l, tbsp, tsp"
+Lime,pcs,Produce,"ml (juice), tbsp (juice)"
+Lime juice,ml,Liquids & Condiments,"l, cup, tbsp, tsp"
+Maple syrup,tbsp,Liquids & Condiments,"ml, l, cup, tsp"
+Mayonnaise,g,Liquids & Condiments,"tbsp, cup, kg"
+Milk,ml,Dairy & Sauces,"l, cup, tbsp, tsp"
+Mixed vegetables,g,Produce,kg
+Mushrooms,g,Produce,"pcs, kg"
+Mustard,g,Liquids & Condiments,"tbsp, tsp, kg"
+Napa cabbage,pcs,Produce,
+Nori sheets,pcs,Grains & Dough,
+Oats,g,Grains & Dough,"cup, tbsp, tsp, kg"
+Oil,ml,Liquids & Condiments,"l, cup, tbsp, tsp"
+Olive oil,tbsp,Liquids & Condiments,"ml, l, cup, tsp"
+Olives,g,Produce,kg
+Onion,pcs,Produce,
+Onion (finely chopped),g,Produce,kg
+Onion powder,g,Spices & Seasonings,"tsp, tbsp, to_taste, kg"
+Oregano,g,Spices & Seasonings,"tsp, tbsp, to_taste, kg"
+Pad Thai sauce,tbsp,Other,"ml, l, cup, tsp"
+Paprika,g,Spices & Seasonings,"tsp, tbsp, to_taste, kg"
+Parmesan cheese,g,Dairy & Sauces,kg
+Parsley,g,Produce,"cup, kg"
+Pasta,g,Grains & Dough,kg
+Peanuts,g,Other,kg
+Pecorino,g,Dairy & Sauces,kg
+Phyllo dough,g,Grains & Dough,kg
+Pie pastry,sheets,Grains & Dough,pcs
+Pineapple,g,Produce,kg
+Pita bread,pcs,Grains & Dough,
+Pizza dough,g,Grains & Dough,kg
+Pork (mixed cuts),g,Protein,kg
+Pork belly,g,Protein,kg
+Pork shoulder,g,Protein,kg
+Potatoes,g,Produce,kg
+Potatoes (fries),g,Produce,kg
+Ramen noodles,g,Grains & Dough,kg
+Rice,g,Grains & Dough,"kg, cup, tbsp, tsp, to_taste"
+Rice noodles,g,Grains & Dough,"kg, cup, tbsp, tsp, to_taste"
+Rice paper sheets,pcs,Grains & Dough,
+Saffron (brewed),tbsp,Spices & Seasonings,"ml, l, cup, tsp"
+Salmon fillets,g,Protein,kg
+Salt,g,Spices & Seasonings,"kg, cup, tbsp, tsp, to_taste"
+Sesame oil,tbsp,Liquids & Condiments,"ml, l, cup, tsp"
+Shawarma spices,tbsp,Spices & Seasonings,"ml, l, cup, tsp"
+Short-grain rice,g,Grains & Dough,"kg, cup, tbsp, tsp, to_taste"
+Shrimp,g,Protein,kg
+Soy sauce,tbsp,Liquids & Condiments,"ml, l, cup, tsp"
+Spaghetti,g,Other,kg
+Spices,tbsp,Spices & Seasonings,"ml, l, cup, tsp, to_taste"
+Spinach,g,Produce,"cup, pcs, kg"
+Sriracha,ml,Liquids & Condiments,"tbsp, tsp, cup, l"
+Sugar,g,Other,"kg, cup, tbsp, tsp, to_taste"
+Sugar syrup,ml,Liquids & Condiments,"l, cup, tbsp, tsp"
+Sushi rice,g,Grains & Dough,"kg, cup, tbsp, tsp, to_taste"
+Tahini,g,Other,"kg, cup, tbsp"
+Tapioca flour,g,Spices & Seasonings,"kg, cup, tbsp, tsp, to_taste"
+Tomato paste,g,Liquids & Condiments,"tbsp, tsp, kg"
+Tomato puree,g,Produce,kg
+Tomato sauce,g,Produce,kg
+Tomatoes,pcs,Produce,
+Turmeric,g,Spices & Seasonings,"tsp, tbsp, to_taste, kg"
+Vanilla extract,ml,Liquids & Condiments,"tsp, tbsp, cup, l"
+Vegetable oil,tbsp,Liquids & Condiments,"ml, l, cup, tsp"
+Vegetables,g,Produce,kg
+Vinegar,tsp,Liquids & Condiments,"ml, l, cup, tbsp"
+Water,ml,Liquids & Condiments,"l, cup, tbsp, tsp"
+White fish fillets,g,Protein,kg
+White wine,ml,Liquids & Condiments,"l, cup, tbsp, tsp"
+Worcestershire sauce,ml,Liquids & Condiments,"tbsp, tsp, cup, l"
+Yeast,g,Other,kg
+Yogurt,g,Dairy & Sauces,"kg, cup, tbsp"
+Zucchini,pcs,Produce,

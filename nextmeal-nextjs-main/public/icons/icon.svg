@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f97316"/>
+      <stop offset="100%" style="stop-color:#ea580c"/>
+    </linearGradient>
+    <linearGradient id="plateGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#f1f5f9"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="512" height="512" rx="100" fill="url(#bgGradient)"/>
+  
+  <!-- Plate -->
+  <ellipse cx="256" cy="280" rx="140" ry="100" fill="url(#plateGradient)" opacity="0.95"/>
+  <ellipse cx="256" cy="280" rx="110" ry="75" fill="none" stroke="#e2e8f0" stroke-width="3"/>
+  
+  <!-- Food elements - stylized meal -->
+  <!-- Main dish circle -->
+  <circle cx="256" cy="270" r="60" fill="#fcd34d"/>
+  
+  <!-- Leaf/herb decoration -->
+  <path d="M220 240 Q240 220 260 240 Q240 260 220 240" fill="#22c55e"/>
+  <path d="M280 250 Q300 230 300 260 Q280 270 280 250" fill="#16a34a"/>
+  
+  <!-- Steam lines -->
+  <path d="M200 180 Q210 160 200 140" stroke="#ffffff" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.8"/>
+  <path d="M256 170 Q266 145 256 120" stroke="#ffffff" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.9"/>
+  <path d="M312 180 Q302 160 312 140" stroke="#ffffff" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.8"/>
+  
+  <!-- Fork on left -->
+  <g transform="translate(90, 200) rotate(-30)">
+    <rect x="0" y="0" width="8" height="120" rx="4" fill="#ffffff"/>
+    <rect x="-8" y="-30" width="4" height="35" rx="2" fill="#ffffff"/>
+    <rect x="0" y="-30" width="4" height="35" rx="2" fill="#ffffff"/>
+    <rect x="8" y="-30" width="4" height="35" rx="2" fill="#ffffff"/>
+    <rect x="16" y="-30" width="4" height="35" rx="2" fill="#ffffff"/>
+  </g>
+  
+  <!-- Knife on right -->
+  <g transform="translate(380, 200) rotate(30)">
+    <rect x="0" y="0" width="10" height="120" rx="3" fill="#ffffff"/>
+    <path d="M0 -30 L10 -30 L12 0 L0 0 Z" fill="#ffffff"/>
+  </g>
+  
+  <!-- Text "NM" -->
+  <text x="256" y="420" font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="#ffffff" text-anchor="middle">NextMeal</text>
+</svg>
