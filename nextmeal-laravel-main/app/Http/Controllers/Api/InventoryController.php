@@ -5,11 +5,17 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Inventory;
 use App\Models\Ingredient;
+use App\Services\ExpirationNotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 class InventoryController extends Controller
 {
+    public function __construct(
+        private ExpirationNotificationService $expirationNotificationService
+    ) {}
+
     /**
      * Get all inventory items for authenticated user
      */
@@ -115,11 +121,24 @@ class InventoryController extends Controller
             ]);
 
             $existing->load(['ingredient', 'inputUnitRelation']);
+            try {
+                $this->expirationNotificationService->syncForInventoryItem($existing);
+            } catch (\Throwable $e) {
+                Log::warning('Expiration notification sync failed after inventory update (store)', [
+                    'inventory_id' => $existing->inventory_id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
 
-            return response()->json([
+            $payload = [
                 'data' => $this->formatInventoryItem($existing),
                 'message' => 'Inventory updated',
-            ]);
+            ];
+            $expirationNotif = $this->expirationNotificationService->getActiveExpirationNotificationFor($existing);
+            if ($expirationNotif !== null) {
+                $payload['expirationNotification'] = $expirationNotif;
+            }
+            return response()->json($payload);
         }
 
         // Create new inventory item (store input as user entered, base for calculations)
@@ -136,11 +155,24 @@ class InventoryController extends Controller
         ]);
 
         $inventory->load(['ingredient', 'inputUnitRelation']);
+        try {
+            $this->expirationNotificationService->syncForInventoryItem($inventory);
+        } catch (\Throwable $e) {
+            Log::warning('Expiration notification sync failed after inventory create', [
+                'inventory_id' => $inventory->inventory_id,
+                'error' => $e->getMessage(),
+            ]);
+        }
 
-        return response()->json([
+        $payload = [
             'data' => $this->formatInventoryItem($inventory),
             'message' => 'Inventory item added',
-        ], 201);
+        ];
+        $expirationNotif = $this->expirationNotificationService->getActiveExpirationNotificationFor($inventory);
+        if ($expirationNotif !== null) {
+            $payload['expirationNotification'] = $expirationNotif;
+        }
+        return response()->json($payload, 201);
     }
 
     /**
@@ -153,10 +185,15 @@ class InventoryController extends Controller
             return response()->json(['message' => 'Not found'], 404);
         }
 
+        // Normalize empty expiry_date to null so validation accepts it (same as store)
+        $request->merge([
+            'expiry_date' => $request->input('expiry_date') ?: null,
+        ]);
+
         $validated = $request->validate([
             'quantity' => ['sometimes', 'numeric', 'min:0.001'],
             'unit' => ['sometimes', 'string', 'max:20'],
-            'expiry_date' => ['sometimes', 'date'],
+            'expiry_date' => ['nullable', 'date'],
             'minimum_threshold' => ['nullable', 'numeric', 'min:0'],
         ]);
 
@@ -180,7 +217,7 @@ class InventoryController extends Controller
             }
         }
 
-        if (isset($validated['expiry_date'])) {
+        if (array_key_exists('expiry_date', $validated)) {
             $updateData['expiration_date'] = $validated['expiry_date'];
         }
 
@@ -191,9 +228,21 @@ class InventoryController extends Controller
         $inventory->update($updateData);
         $inventory->load(['ingredient', 'inputUnitRelation']);
 
-        return response()->json([
-            'data' => $this->formatInventoryItem($inventory),
-        ]);
+        try {
+            $this->expirationNotificationService->syncForInventoryItem($inventory);
+        } catch (\Throwable $e) {
+            Log::warning('Expiration notification sync failed after inventory update', [
+                'inventory_id' => $inventory->inventory_id,
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        $payload = ['data' => $this->formatInventoryItem($inventory)];
+        $expirationNotif = $this->expirationNotificationService->getActiveExpirationNotificationFor($inventory);
+        if ($expirationNotif !== null) {
+            $payload['expirationNotification'] = $expirationNotif;
+        }
+        return response()->json($payload);
     }
 
     /**
@@ -206,6 +255,14 @@ class InventoryController extends Controller
             return response()->json(['message' => 'Not found'], 404);
         }
 
+        try {
+            $this->expirationNotificationService->deactivateForInventoryItem($inventory);
+        } catch (\Throwable $e) {
+            Log::warning('Expiration notification deactivate failed before inventory delete', [
+                'inventory_id' => $inventory->inventory_id,
+                'error' => $e->getMessage(),
+            ]);
+        }
         $inventory->delete();
 
         return response()->json([
@@ -242,6 +299,7 @@ class InventoryController extends Controller
     {
         return [
             'id' => $item->inventory_id,
+            'ingredientId' => $item->ingredient_id,
             'name' => $item->ingredient->ingredient_name ?? '',
             'quantity' => (float) $item->input_quantity,
             'unit' => $item->input_unit,

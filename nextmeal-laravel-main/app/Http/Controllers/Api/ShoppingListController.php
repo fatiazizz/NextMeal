@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ShoppingList;
 use App\Models\Ingredient;
+use App\Models\Inventory;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
@@ -72,13 +73,19 @@ class ShoppingListController extends Controller
     }
 
     /**
-     * Update shopping list item
+     * Update shopping list item. Checked items cannot be edited to preserve data integrity.
      */
     public function update(Request $request, ShoppingList $shoppingList): JsonResponse
     {
         // Ensure user owns this item
         if ($shoppingList->user_id !== $request->user()->user_id) {
             return response()->json(['message' => 'Not found'], 404);
+        }
+
+        if ($shoppingList->is_checked) {
+            return response()->json([
+                'message' => 'Checked items cannot be edited. Remove from list first to re-add.',
+            ], 422);
         }
 
         $validated = $request->validate([
@@ -127,7 +134,7 @@ class ShoppingListController extends Controller
     }
 
     /**
-     * Toggle checked status
+     * Toggle checked status. When toggling to checked, adds the item's quantity to user's inventory.
      */
     public function toggleChecked(Request $request, ShoppingList $shoppingList): JsonResponse
     {
@@ -136,8 +143,16 @@ class ShoppingListController extends Controller
             return response()->json(['message' => 'Not found'], 404);
         }
 
+        $wasChecked = $shoppingList->is_checked;
+        $willBeChecked = !$wasChecked;
+
+        if ($willBeChecked) {
+            // Add quantity to user's inventory when checking off
+            $this->addCheckedItemToInventory($request, $shoppingList);
+        }
+
         $shoppingList->update([
-            'is_checked' => !$shoppingList->is_checked,
+            'is_checked' => $willBeChecked,
         ]);
 
         $shoppingList->load(['ingredient', 'unit']);
@@ -145,6 +160,54 @@ class ShoppingListController extends Controller
         return response()->json([
             'data' => $this->formatShoppingItem($shoppingList),
         ]);
+    }
+
+    /**
+     * Add a checked-off shopping list item's quantity to the user's inventory.
+     */
+    private function addCheckedItemToInventory(Request $request, ShoppingList $shoppingList): void
+    {
+        if (!$shoppingList->ingredient_id) {
+            return; // Cannot add to inventory without a linked system ingredient
+        }
+
+        $ingredient = Ingredient::with('baseUnit')->find($shoppingList->ingredient_id);
+        if (!$ingredient) {
+            return;
+        }
+
+        // Convert shopping list quantity (in its unit) to ingredient's base unit
+        $converted = $ingredient->convertToBaseQuantity((float) $shoppingList->quantity, $shoppingList->unit_code);
+        $addedBaseQty = $converted['base_quantity'];
+        $baseUnit = $converted['base_unit'];
+
+        $userId = $request->user()->user_id;
+        $existing = Inventory::where('user_id', $userId)
+            ->where('ingredient_id', $ingredient->ingredient_id)
+            ->first();
+
+        if ($existing) {
+            $newBaseQty = (float) $existing->base_quantity + $addedBaseQty;
+            $existing->update([
+                'base_quantity' => $newBaseQty,
+                'base_unit' => $baseUnit,
+                'input_quantity' => $newBaseQty,
+                'input_unit' => $baseUnit,
+                'last_updated' => now(),
+            ]);
+        } else {
+            $expirationDate = now()->addDays($ingredient->default_days_until_expiry ?? 7)->format('Y-m-d');
+            Inventory::create([
+                'user_id' => $userId,
+                'ingredient_id' => $ingredient->ingredient_id,
+                'input_quantity' => $addedBaseQty,
+                'input_unit' => $baseUnit,
+                'base_quantity' => $addedBaseQty,
+                'base_unit' => $baseUnit,
+                'expiration_date' => $expirationDate,
+                'last_updated' => now(),
+            ]);
+        }
     }
 
     /**
@@ -169,6 +232,7 @@ class ShoppingListController extends Controller
     {
         return [
             'id' => $item->shopping_list_id,
+            'ingredientId' => $item->ingredient_id,
             'name' => $item->ingredient?->ingredient_name ?? $extra['name'] ?? '',
             'category' => $item->ingredient?->category?->name ?? $extra['category'] ?? 'Other',
             'unit' => $item->unit_code,

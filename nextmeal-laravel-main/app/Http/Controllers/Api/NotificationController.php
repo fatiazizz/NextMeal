@@ -4,18 +4,37 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
+use App\Services\ExpirationNotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
 class NotificationController extends Controller
 {
+    public function __construct(
+        private ExpirationNotificationService $expirationNotificationService
+    ) {}
+
     /**
-     * Get all notifications for authenticated user
+     * Get all notifications for authenticated user.
+     * Syncs expiration notifications for current inventory before returning, so existing
+     * items that expire soon always have a notification.
      */
     public function index(Request $request): JsonResponse
     {
-        $notifications = $request->user()
-            ->notifications()
+        $user = $request->user();
+
+        $user->inventory()
+            ->with(['ingredient', 'user'])
+            ->get()
+            ->each(function ($item) {
+                try {
+                    $this->expirationNotificationService->syncForInventoryItem($item);
+                } catch (\Throwable $e) {
+                    // Don't fail the whole request if one item fails
+                }
+            });
+
+        $notifications = $user->notifications()
             ->where('is_active', true)
             ->orderBy('sent_at', 'desc')
             ->get()

@@ -87,6 +87,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Recommendations (Meal Suggestion Engine)
     Route::get('/recommendations', [RecommendationController::class, 'index']);
+    Route::post('/recommendations/{recipe}/use', [RecommendationController::class, 'useRecipe']);
 
     // Admin routes (admin only)
     Route::prefix('admin')->group(function () {

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Ingredient;
 use App\Models\Inventory;
 use App\Models\Recipe;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
@@ -179,5 +180,72 @@ final class RecommendationLogicService
         }
 
         return ($h - $dj) / (float) $h;
+    }
+
+    /**
+     * Apply recipe usage to user's inventory: deduct required amounts (in base units) from
+     * inventory per ingredient. Remaining amount = max(0, available - required). Deduction
+     * is applied FIFO by expiration (soonest first). Quantities are never stored as negative.
+     *
+     * @return array{deducted: array<string, float>, updated_count: int}
+     */
+    public function applyRecipeUsage(User $user, Recipe $recipe): array
+    {
+        $recipe->loadMissing(['recipeIngredients.ingredient']);
+        $deducted = [];
+        $updatedCount = 0;
+
+        foreach ($recipe->recipeIngredients as $ri) {
+            $ingredient = $ri->ingredient;
+            if (! $ingredient) {
+                continue;
+            }
+
+            $requiredQty = (float) $ri->required_quantity;
+            $requiredUnit = $ri->required_unit ?? $ingredient->base_unit_code ?? 'pcs';
+            $converted = $ingredient->convertToBaseQuantity($requiredQty, $requiredUnit);
+            $requiredBase = (float) ($converted['base_quantity'] ?? $requiredQty);
+            $baseUnit = $converted['base_unit'] ?? $ingredient->base_unit_code ?? $requiredUnit;
+
+            $items = $user->inventory()
+                ->where('ingredient_id', $ingredient->ingredient_id)
+                ->orderByRaw('expiration_date IS NULL, expiration_date ASC')
+                ->get();
+
+            $totalAvailable = 0.0;
+            foreach ($items as $item) {
+                $base = (float) $item->base_quantity;
+                $totalAvailable += $base;
+            }
+
+            $remainingBase = $totalAvailable - $requiredBase;
+            if ($remainingBase < 0) {
+                $remainingBase = 0.0;
+            }
+            $toDeduct = $totalAvailable - $remainingBase;
+
+            $deducted[$ingredient->ingredient_id] = $toDeduct;
+
+            $stillToDeduct = $toDeduct;
+            foreach ($items as $item) {
+                if ($stillToDeduct <= 0) {
+                    break;
+                }
+                $baseQty = (float) $item->base_quantity;
+                $take = min($baseQty, $stillToDeduct);
+                $newBase = $baseQty - $take;
+                $stillToDeduct -= $take;
+
+                $item->base_quantity = $newBase;
+                $item->input_quantity = $newBase;
+                $item->input_unit = $item->base_unit ?? $baseUnit;
+                $item->base_unit = $item->base_unit ?? $baseUnit;
+                $item->last_updated = now();
+                $item->save();
+                $updatedCount++;
+            }
+        }
+
+        return ['deducted' => $deducted, 'updated_count' => $updatedCount];
     }
 }

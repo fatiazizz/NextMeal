@@ -41,7 +41,9 @@ class RecommendationController extends Controller
         foreach ($recipes as $recipe) {
             $result = $this->recommendationLogic->scoreRecipe($recipe, $inventory, $expirationReferenceDays);
 
-            if ($result['matched_count'] > 0) {
+            // Exclude recipes with 0% match: matched_count > 0 is not enough when ms is 0
+            // (e.g. due to quantity/unit mismatch). Only recommend recipes with nonzero match.
+            if ($result['matched_count'] > 0 && $result['ms'] > 0) {
                 $recommendations[] = [
                     'id' => $recipe->recipe_id,
                     'name' => $recipe->recipe_name ?? 'Untitled Recipe',
@@ -80,6 +82,21 @@ class RecommendationController extends Controller
                 'inventory_items' => count($inventoryByIngredient),
                 'expiration_reference_days' => $expirationReferenceDays,
             ],
+        ]);
+    }
+
+    /**
+     * Mark recipe as "used": deduct required ingredient amounts from the user's inventory.
+     * Remaining quantity per ingredient = max(0, available - required). Deduction is FIFO by expiration.
+     */
+    public function useRecipe(Request $request, Recipe $recipe): JsonResponse
+    {
+        $user = $request->user();
+        $result = $this->recommendationLogic->applyRecipeUsage($user, $recipe);
+        return response()->json([
+            'message' => 'Inventory updated. Used ingredients have been deducted.',
+            'deducted' => $result['deducted'],
+            'updated_count' => $result['updated_count'],
         ]);
     }
 }
