@@ -13,6 +13,8 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   const isLoginPage = pathname === "/login";
+  const isForgotPasswordPage = pathname === "/forgot-password";
+  const isPasswordResetPage = pathname?.startsWith("/password-reset/");
   const isHomePage = pathname === "/";
   const isOfflinePage = pathname === "/offline";
 
@@ -24,8 +26,8 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     setIsMobileMenuOpen(false);
   };
 
-  // For login, home, and offline pages, render without header and full screen
-  if (isLoginPage || isHomePage || isOfflinePage) {
+  // For login, forgot-password, password-reset, home, and offline pages, render without header and full screen
+  if (isLoginPage || isForgotPasswordPage || isPasswordResetPage || isHomePage || isOfflinePage) {
     return (
       <>
         <OfflineIndicator />

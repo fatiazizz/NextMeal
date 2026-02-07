@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useMemo, useState, useEffect, useCallback } from "react";
 import type { Ingredient, Recipe, ShoppingItem } from "@/types";
 import { SYSTEM_USER_ID } from "@/types";
-import { inventoryApi, recipesApi, shoppingListApi, favoritesApi, type CreateRecipeInput, type UpdateRecipeInput } from "@/utils/api";
+import { inventoryApi, notificationsApi, recipesApi, shoppingListApi, favoritesApi, type CreateRecipeInput, type UpdateRecipeInput } from "@/utils/api";
 import { useNotifications } from "./NotificationContext";
 import { useUser } from "./UserContext";
 
@@ -146,7 +146,7 @@ export function InventoryProvider({ children }: { children: React.ReactNode }) {
   const [isLoadingShoppingList, setIsLoadingShoppingList] = useState(true);
 
   // Get notification context and auth state (to reload data on login / clear on logout)
-  const { addNotification } = useNotifications();
+  const { addNotification, appendServerNotification } = useNotifications();
   const { user } = useUser();
 
   const addInfoNotification = useCallback((message: string) => {
@@ -181,9 +181,19 @@ export function InventoryProvider({ children }: { children: React.ReactNode }) {
   const addIngredient = useCallback(async (item: Omit<Ingredient, "id" | "userId" | "createdAt" | "updatedAt">) => {
     if (useApiMode) {
       try {
-        const newItem = await inventoryApi.create(item);
-        setIngredients((prev) => [newItem, ...prev]);
-        addInfoNotification("Ingredient added to inventory.");
+        const { data, expirationNotification } = await inventoryApi.create(item);
+        setIngredients((prev) => [data, ...prev]);
+        try {
+          const infoNotif = await notificationsApi.create({
+            notificationType: "info",
+            severity: "normal",
+            payload: { message: "Ingredient added to inventory." },
+          });
+          appendServerNotification(infoNotif);
+        } catch {
+          addInfoNotification("Ingredient added to inventory.");
+        }
+        if (expirationNotification) appendServerNotification(expirationNotification);
       } catch (error) {
         console.error("Failed to add ingredient:", error);
         throw error;
@@ -197,14 +207,23 @@ export function InventoryProvider({ children }: { children: React.ReactNode }) {
       };
       setIngredients((prev) => [newItem, ...prev]);
     }
-  }, [useApiMode, addInfoNotification]);
+  }, [useApiMode, addInfoNotification, appendServerNotification]);
 
   const removeIngredient = useCallback(async (id: string) => {
     if (useApiMode) {
       try {
         await inventoryApi.delete(id);
         setIngredients((prev) => prev.filter((x) => x.id !== id));
-        addInfoNotification("Ingredient removed from inventory.");
+        try {
+          const infoNotif = await notificationsApi.create({
+            notificationType: "info",
+            severity: "normal",
+            payload: { message: "Ingredient removed from inventory." },
+          });
+          appendServerNotification(infoNotif);
+        } catch {
+          addInfoNotification("Ingredient removed from inventory.");
+        }
       } catch (error) {
         console.error("Failed to remove ingredient:", error);
         throw error;
@@ -212,13 +231,14 @@ export function InventoryProvider({ children }: { children: React.ReactNode }) {
     } else {
       setIngredients((prev) => prev.filter((x) => x.id !== id));
     }
-  }, [useApiMode, addInfoNotification]);
+  }, [useApiMode, addInfoNotification, appendServerNotification]);
 
   const updateIngredient = useCallback(async (id: string, patch: InventoryPatch) => {
     if (useApiMode) {
       try {
-        const updated = await inventoryApi.update(id, patch);
-        setIngredients((prev) => prev.map((x) => (x.id === id ? updated : x)));
+        const { data, expirationNotification } = await inventoryApi.update(id, patch);
+        setIngredients((prev) => prev.map((x) => (x.id === id ? data : x)));
+        if (expirationNotification) appendServerNotification(expirationNotification);
       } catch (error) {
         console.error("Failed to update ingredient:", error);
         throw error;
@@ -226,7 +246,7 @@ export function InventoryProvider({ children }: { children: React.ReactNode }) {
     } else {
       setIngredients((prev) => prev.map((x) => (x.id === id ? { ...x, ...patch } : x)));
     }
-  }, [useApiMode]);
+  }, [useApiMode, appendServerNotification]);
 
   const getLowStockItems = useCallback(() => {
     return ingredients.filter((x) => x.quantity <= (x.minimumThreshold || 2));
@@ -484,6 +504,10 @@ export function InventoryProvider({ children }: { children: React.ReactNode }) {
       try {
         const updated = await shoppingListApi.toggleChecked(id);
         setShoppingList((prev) => prev.map((x) => (x.id === id ? updated : x)));
+        if (updated.checked) {
+          await refreshInventory();
+          addInfoNotification("Item checked off. Amount added to your inventory.");
+        }
       } catch (error) {
         console.error("Failed to toggle shopping item:", error);
         setShoppingList((prev) => {
@@ -499,7 +523,7 @@ export function InventoryProvider({ children }: { children: React.ReactNode }) {
         return updated;
       });
     }
-  }, [useApiMode]);
+  }, [useApiMode, refreshInventory, addInfoNotification]);
 
   const clearCompletedItems = useCallback(async () => {
     if (useApiMode) {

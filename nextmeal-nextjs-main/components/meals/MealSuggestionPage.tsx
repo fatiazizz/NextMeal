@@ -27,7 +27,7 @@ import type { CuisineOption, CookingMethodOption } from "@/utils/api";
 
 export function MealSuggestionsPage() {
   const router = useRouter();
-  const { ingredients, recipes, addCustomRecipe, updateRecipe, deleteRecipe } = useInventory();
+  const { ingredients, recipes, addCustomRecipe, updateRecipe, deleteRecipe, refreshInventory } = useInventory();
   const { canEditRecipe, canDeleteRecipe, user } = useUser();
 
   const [sortBy, setSortBy] = useState<"match" | "expiry">("expiry");
@@ -171,25 +171,28 @@ export function MealSuggestionsPage() {
           servings: recipe.servings,
         };
       })
-      .filter((s) => s.matchedIngredients.length > 0);
+      .filter((s) => s.matchedIngredients.length > 0 && s.matchPercentage > 0);
   }, [ingredients, recipes]);
 
   // When logged in, use backend recommendations (quantity-aware, base-unit comparison); otherwise use local computation.
   // Merge in local "usesExpiringIngredients" and normalize name (API may send "name" or "recipe_name").
+  // Exclude 0% match recipes from all sources so they never flash then disappear.
   const suggestions = useMemo(() => {
-    if (!user || apiSuggestions === null) return localSuggestions;
-    return apiSuggestions.map((apiS) => {
-      const local = localSuggestions.find((s) => s.id === apiS.id);
-      const rawName = apiS.name ?? (apiS as { recipe_name?: string }).recipe_name;
-      const name = [rawName, local?.name].find((v) => v != null && String(v).trim() !== "")
-        || "Untitled Recipe";
-      return {
-        ...apiS,
-        name,
-        usesExpiringIngredients:
-          apiS.usesExpiringIngredients || (local?.usesExpiringIngredients ?? false),
-      };
-    });
+    const raw = !user || apiSuggestions === null
+      ? localSuggestions
+      : apiSuggestions.map((apiS) => {
+          const local = localSuggestions.find((s) => s.id === apiS.id);
+          const rawName = apiS.name ?? (apiS as { recipe_name?: string }).recipe_name;
+          const name = [rawName, local?.name].find((v) => v != null && String(v).trim() !== "")
+            || "Untitled Recipe";
+          return {
+            ...apiS,
+            name,
+            usesExpiringIngredients:
+              apiS.usesExpiringIngredients || (local?.usesExpiringIngredients ?? false),
+          };
+        });
+    return raw.filter((s) => s.matchPercentage > 0);
   }, [user, apiSuggestions, localSuggestions]);
 
   const sortedSuggestions = useMemo(() => {
@@ -611,6 +614,7 @@ export function MealSuggestionsPage() {
                       canDelete={recipe ? canDeleteRecipe(recipe.ownerUserId) : false}
                       onEdit={() => recipe && setEditingRecipe(recipe)}
                       onDelete={() => setDeletingRecipeId(s.id)}
+                      onUseIt={refreshInventory ? () => recommendationsApi.useRecipe(s.id).then(refreshInventory) : undefined}
                       userId={user?.id}
                     />
                   );
@@ -647,6 +651,7 @@ export function MealSuggestionsPage() {
                       canDelete={recipe ? canDeleteRecipe(recipe.ownerUserId) : false}
                       onEdit={() => recipe && setEditingRecipe(recipe)}
                       onDelete={() => setDeletingRecipeId(s.id)}
+                      onUseIt={refreshInventory ? () => recommendationsApi.useRecipe(s.id).then(refreshInventory) : undefined}
                       userId={user?.id}
                     />
                   );
@@ -719,6 +724,7 @@ function SuggestionCard({
   canDelete,
   onEdit,
   onDelete,
+  onUseIt,
   userId,
 }: {
   suggestion: MealSuggestion;
@@ -727,11 +733,24 @@ function SuggestionCard({
   canDelete: boolean;
   onEdit: () => void;
   onDelete: () => void;
+  onUseIt?: () => Promise<void>;
   userId?: string;
 }) {
   const router = useRouter();
   const [imageError, setImageError] = useState(false);
+  const [isUsing, setIsUsing] = useState(false);
   const displayName = suggestion.name || recipe?.name || "Untitled Recipe";
+
+  const handleUseIt = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!onUseIt || isUsing) return;
+    setIsUsing(true);
+    try {
+      await onUseIt();
+    } finally {
+      setIsUsing(false);
+    }
+  };
 
   return (
     <div
@@ -873,6 +892,17 @@ function SuggestionCard({
                 ))}
               </div>
             </div>
+          )}
+
+          {onUseIt && (
+            <button
+              type="button"
+              onClick={handleUseIt}
+              disabled={isUsing}
+              className="mt-3 w-full py-2.5 px-4 bg-green-600 hover:bg-green-700 disabled:bg-green-500/70 text-white text-sm font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+            >
+              {isUsing ? "Updating…" : "Use it"}
+            </button>
           )}
         </div>
       </div>

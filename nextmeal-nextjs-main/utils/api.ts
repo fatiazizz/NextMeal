@@ -106,9 +106,15 @@ export const inventoryApi = {
     return response.data;
   },
 
-  // Add new inventory item
-  async create(item: Omit<Ingredient, "id" | "createdAt" | "updatedAt" | "userId">): Promise<Ingredient> {
-    const response = await apiRequest<ApiResponse<Ingredient>>("/inventory", {
+  // Add new inventory item. Returns ingredient and optional expiration notification if one was created.
+  async create(
+    item: Omit<Ingredient, "id" | "createdAt" | "updatedAt" | "userId">
+  ): Promise<{ data: Ingredient; expirationNotification?: Notification }> {
+    const response = await apiRequest<{
+      data: Ingredient;
+      message?: string;
+      expirationNotification?: Notification;
+    }>("/inventory", {
       method: "POST",
       body: JSON.stringify({
         name: item.name,
@@ -119,12 +125,21 @@ export const inventoryApi = {
         minimum_threshold: item.minimumThreshold,
       }),
     });
-    return response.data;
+    return {
+      data: response.data,
+      expirationNotification: response.expirationNotification,
+    };
   },
 
-  // Update inventory item
-  async update(id: string, item: Partial<Ingredient>): Promise<Ingredient> {
-    const response = await apiRequest<ApiResponse<Ingredient>>(`/inventory/${id}`, {
+  // Update inventory item. Returns ingredient and optional expiration notification if one was created/updated.
+  async update(
+    id: string,
+    item: Partial<Ingredient>
+  ): Promise<{ data: Ingredient; expirationNotification?: Notification }> {
+    const response = await apiRequest<{
+      data: Ingredient;
+      expirationNotification?: Notification;
+    }>(`/inventory/${id}`, {
       method: "PUT",
       body: JSON.stringify({
         name: item.name,
@@ -135,7 +150,10 @@ export const inventoryApi = {
         minimum_threshold: item.minimumThreshold,
       }),
     });
-    return response.data;
+    return {
+      data: response.data,
+      expirationNotification: response.expirationNotification,
+    };
   },
 
   // Delete inventory item
@@ -398,6 +416,23 @@ export const notificationsApi = {
     return response.data || [];
   },
 
+  // Create a notification (e.g. info "ingredient added/removed") so it persists and survives refresh
+  async create(notification: {
+    notificationType: "info" | "expiration" | "low_stock";
+    severity: "normal" | "safety";
+    payload: { message: string };
+  }): Promise<Notification> {
+    const response = await apiRequest<ApiResponse<Notification>>("/notifications", {
+      method: "POST",
+      body: JSON.stringify({
+        notification_type: notification.notificationType,
+        severity: notification.severity,
+        payload: notification.payload,
+      }),
+    });
+    return response.data;
+  },
+
   // Mark notification as read
   async markAsRead(id: string): Promise<Notification> {
     const response = await apiRequest<ApiResponse<Notification>>(`/notifications/${id}/read`, {
@@ -431,6 +466,16 @@ export const recommendationsApi = {
       };
     }>("/recommendations");
     return response.data || [];
+  },
+
+  // Mark recipe as "used": deduct required ingredient amounts from inventory (remaining = max(0, available - required))
+  async useRecipe(recipeId: string): Promise<{ message: string; deducted: Record<string, number>; updated_count: number }> {
+    const response = await apiRequest<{
+      message: string;
+      deducted: Record<string, number>;
+      updated_count: number;
+    }>(`/recommendations/${recipeId}/use`, { method: "POST" });
+    return response;
   },
 };
 

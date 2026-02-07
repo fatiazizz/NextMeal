@@ -8,11 +8,12 @@ import { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { Recipe } from "@/types";
 import { RecipeEditModal } from "./RecipeEditModal";
+import { recommendationsApi } from "@/utils/api";
 
 export function RecipePage({ id }: { id: string }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { toggleFavorite, isFavorite, recipes, updateRecipe, deleteRecipe } = useInventory();
+  const { toggleFavorite, isFavorite, recipes, updateRecipe, deleteRecipe, refreshInventory } = useInventory();
   const { canEditRecipe, canDeleteRecipe, user } = useUser();
   
   const fromPage = searchParams.get("from") || "meals";
@@ -21,6 +22,7 @@ export function RecipePage({ id }: { id: string }) {
   const [showEditModal, setShowEditModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isUsing, setIsUsing] = useState(false);
 
   const recipe: Recipe | undefined = useMemo(() => {
     return recipes.find((r) => r.id === id);
@@ -53,6 +55,20 @@ export function RecipePage({ id }: { id: string }) {
     } finally {
       setIsDeleting(false);
       setShowDeleteConfirm(false);
+    }
+  };
+
+  const handleUseIt = async () => {
+    if (!recipe || !user || !refreshInventory || isUsing) return;
+    setIsUsing(true);
+    try {
+      await recommendationsApi.useRecipe(recipe.id);
+      await refreshInventory();
+    } catch (error) {
+      console.error("Failed to update inventory:", error);
+      alert("Failed to deduct ingredients. Please try again.");
+    } finally {
+      setIsUsing(false);
     }
   };
 
@@ -184,6 +200,17 @@ export function RecipePage({ id }: { id: string }) {
           </div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">{recipe.name}</h1>
           <p className="text-gray-700 dark:text-gray-300">{recipe.description}</p>
+
+          {user && refreshInventory && (
+            <button
+              type="button"
+              onClick={handleUseIt}
+              disabled={isUsing}
+              className="mt-6 w-full sm:w-auto min-w-[200px] py-3 px-6 bg-green-600 hover:bg-green-700 disabled:bg-green-500/70 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+            >
+              {isUsing ? "Updating inventory…" : "Use it"}
+            </button>
+          )}
         </div>
 
         <div className="p-8">

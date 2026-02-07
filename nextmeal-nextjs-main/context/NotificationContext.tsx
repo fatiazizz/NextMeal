@@ -12,6 +12,7 @@ type NotificationContextValue = {
   markAllAsRead: () => Promise<void>;
   deleteNotification: (id: string) => Promise<void>;
   addNotification: (notification: Omit<Notification, "id" | "sentAt">) => void;
+  appendServerNotification: (notification: Notification) => void;
   refreshNotifications: () => Promise<void>;
 };
 
@@ -55,7 +56,16 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     setIsLoading(true);
     try {
       const data = await notificationsApi.getAll();
-      setNotifications(data);
+      setNotifications((prev) => {
+        const fromApi = data;
+        const recentLocalInfo = prev.filter(
+          (n) =>
+            n.notificationType === "info" &&
+            n.sentAt &&
+            Date.now() - new Date(n.sentAt).getTime() < 60_000
+        );
+        return [...fromApi, ...recentLocalInfo];
+      });
       setUseApiMode(true);
     } catch (error) {
       console.warn("Notifications API unavailable, using localStorage:", error);
@@ -65,6 +75,13 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     } finally {
       setIsLoading(false);
     }
+  }, []);
+
+  const appendServerNotification = useCallback((notification: Notification) => {
+    setNotifications((prev) => {
+      if (prev.some((n) => n.id === notification.id)) return prev;
+      return [notification, ...prev];
+    });
   }, []);
 
   const unreadCount = useMemo(
@@ -225,6 +242,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
       markAllAsRead,
       deleteNotification,
       addNotification,
+      appendServerNotification,
       refreshNotifications,
     }),
     [
@@ -235,6 +253,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
       markAllAsRead,
       deleteNotification,
       addNotification,
+      appendServerNotification,
       refreshNotifications,
     ]
   );

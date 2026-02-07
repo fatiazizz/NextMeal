@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useUser } from "@/context/UserContext";
 import { ChefHat, Mail, Lock, User, ArrowRight, Sparkles } from "lucide-react";
 
@@ -252,12 +253,12 @@ export default function LoginPage() {
 
             {isLogin && (
               <div className="mt-6 text-center">
-                <a
-                  href="#"
+                <Link
+                  href="/forgot-password"
                   className="text-sm text-green-600 hover:text-green-700 font-medium hover:underline transition-colors"
                 >
                   Forgot your password?
-                </a>
+                </Link>
               </div>
             )}
           </div>

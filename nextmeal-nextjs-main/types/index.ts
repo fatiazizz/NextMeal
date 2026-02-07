@@ -15,6 +15,7 @@ export type User = {
 
 export type Ingredient = {
   id: string;
+  ingredientId?: string;
   name: string;
   quantity: number;
   unit: string;
@@ -83,6 +84,7 @@ export type Recipe = {
 
 export type ShoppingItem = {
   id: string;
+  ingredientId?: string;
   name: string;
   category: string;
   unit: string;

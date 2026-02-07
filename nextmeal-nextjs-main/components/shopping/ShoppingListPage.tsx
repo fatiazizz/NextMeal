@@ -127,11 +127,12 @@ export function ShoppingListPage() {
         const defaults = ingredientDefaults[key];
         return {
           id: x.id,
+          ingredientId: x.ingredientId,
           name: x.name,
           unit: x.unit,
           current: x.quantity,
           threshold: x.minimumThreshold || LOW_STOCK_THRESHOLD,
-          category: defaults?.category || "Other",
+          category: defaults?.category || x.category || "Other",
         };
       });
   }, [ingredients, dismissedRecommendations]);
@@ -195,6 +196,7 @@ export function ShoppingListPage() {
 
   const addRecommendedItem = async (item: {
     id: string;
+    ingredientId?: string;
     name: string;
     category: string;
     unit: string;
@@ -215,6 +217,7 @@ export function ShoppingListPage() {
         quantity,
         checked: false,
         fromRecommendations: true,
+        ingredientId: item.ingredientId,
       });
     } catch (error) {
       console.error("Failed to add recommended item:", error);
@@ -548,10 +551,13 @@ export function ShoppingListPage() {
           </div>
         )}
 
-        {/* Checked */}
+        {/* Checked - not editable; quantity already added to inventory */}
         {checkedItems.length > 0 && (
           <div>
             <h3 className="mb-3 text-gray-500 dark:text-gray-400 font-semibold">Checked Off</h3>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+              These amounts have been added to your inventory. Remove to clear from this list.
+            </p>
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 divide-y divide-gray-200 dark:divide-gray-700 opacity-75">
               {checkedItems.map((item) => (
                 <div
@@ -559,12 +565,9 @@ export function ShoppingListPage() {
                   className="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
                 >
                   <div className="flex items-center gap-3 flex-1">
-                    <button
-                      onClick={() => handleToggle(item.id)}
-                      className="text-green-600 hover:text-gray-400 transition-colors"
-                    >
+                    <div className="text-green-600 cursor-default" title="Purchased — amount added to inventory">
                       <CheckCircle2 className="w-5 h-5" />
-                    </button>
+                    </div>
                     <div className="flex-1">
                       <p className="capitalize text-gray-500 dark:text-gray-400 line-through">{item.name}</p>
                       <p className="text-sm text-gray-400 dark:text-gray-500">
@@ -575,7 +578,7 @@ export function ShoppingListPage() {
                   <button
                     onClick={() => handleRemove(item.id)}
                     className="text-gray-400 hover:text-red-600 transition-colors ml-2"
-                    title="Delete"
+                    title="Remove from checked list"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
